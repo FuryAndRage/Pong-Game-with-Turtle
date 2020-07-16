@@ -6,45 +6,60 @@ screen.bgcolor('black')
 screen.setup(width=800, height=600)
 screen.tracer(0)
 
-class Paddle:
-    def __init__(self, position_x, position_y):
+class Base:
+    def __init__(self, position_x, position_y, shape):
         self.position_x = position_x
         self.position_y = position_y
+        self.shape = shape
+        self.vector = turtle.Turtle()
     
     def model(self):
-        paddle = turtle.Turtle()
-        paddle.speed(0)
-        paddle.shape('square')
-        paddle.color('white')
-        paddle.shapesize(stretch_wid=5, stretch_len=1)
-        paddle.penup()
-        paddle.goto(self.position_x, self.position_y)
+        self.vector.speed(0)
+        self.vector.shape(self.shape)
+        self.vector.color('white')
+        self.vector.penup()
+        self.vector.goto(self.position_x, self.position_y)
 
-class Ball:
-    def __init__(self, position_x, position_y):
+    
+
+
+class Paddle(Base):
+    def __init__(self, position_x, position_y, shape):
+        super().__init__(position_x, position_y, shape)
         self.position_x = position_x
         self.position_y = position_y
-    def model(self):   
-        ball = turtle.Turtle()
-        ball.speed(0)
-        ball.shape('circle')
-        ball.color('white')
-        ball.penup()
-        ball.goto(self.position_x, self.position_y)
+        self.shape = shape
+        self.paddle = turtle.Turtle()
 
-#paddle a
+    def model(self):
+        super().model()
+        self.vector.shapesize(stretch_wid=5, stretch_len=1)
 
-paddle_a = Paddle(-350,0)
+   
+    def paddle_up(self):
+        y = self.paddle.ycor()
+        y += 20
+        self.paddle.sety(y)
+
+    screen.listen()
+    screen.onkeypress(paddle_up,'w')
+
+
+paddle_a = Paddle(-350,0,'square')
 paddle_a.model()
 
+
 #paddle b
-paddle_b = Paddle(350, 0)
+paddle_b = Paddle(350, 0,'square')
 paddle_b.model()
 
 #ball
-ball = Ball(0,0)
+ball = Base(0,0,'circle')
 ball.model()
+print(paddle_a.position_x)
 
 #main loop
 while True:
     screen.update()
+    
+   
