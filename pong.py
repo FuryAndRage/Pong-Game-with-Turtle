@@ -35,23 +35,21 @@ class Paddle(Base):
         super().model()
         self.vector.shapesize(stretch_wid=5, stretch_len=1)
 
-   
-    def paddle_up(self):
-        y = self.paddle.ycor()
-        y += 20
-        self.paddle.sety(y)
-
-    screen.listen()
-    screen.onkeypress(paddle_up,'w')
-
 
 paddle_a = Paddle(-350,0,'square')
+def paddle_a_up():
+        y = paddle_a.ycor()
+        y += 20
+        paddle_a.sety(y)
 paddle_a.model()
+screen.listen()
+screen.onkeypress(paddle_a_up,'w')
 
 
 #paddle b
 paddle_b = Paddle(350, 0,'square')
 paddle_b.model()
+
 
 #ball
 ball = Base(0,0,'circle')
